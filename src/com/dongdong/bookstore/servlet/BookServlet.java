@@ -2,6 +2,8 @@ package com.dongdong.bookstore.servlet;
 
 import java.io.IOException;
 import java.lang.reflect.Method;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,9 +12,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.dongdong.bookstore.domain.Book;
+import com.dongdong.bookstore.domain.ShoppingCart;
 import com.dongdong.bookstore.service.BookService;
+import com.dongdong.bookstore.web.BookStoreWebUtils;
 import com.dongdong.bookstore.web.CriteriaBook;
 import com.dongdong.bookstore.web.Page;
+import com.google.gson.Gson;
 
 /**
  * Servlet implementation class BookServlet
@@ -26,8 +31,6 @@ public class BookServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
 		doPost(request, response);
 	}
 
@@ -92,5 +95,88 @@ public class BookServlet extends HttpServlet {
 		}
 		request.setAttribute("book", book);
 		request.getRequestDispatcher("/WEB-INF/pages/book.jsp").forward(request, response);
+	}
+	public void  addToCart(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		//0 get book id
+		String idStr=request.getParameter("id");
+		int id=-1;
+		boolean flag=false;
+		
+		try{
+			id=Integer.parseInt(idStr);
+		}catch(Exception e){
+			
+		}
+		if(id>0){
+			//1 get the cart
+			ShoppingCart cart=BookStoreWebUtils.getShoppingCart(request);
+			//2 BookService.addToCart
+			flag=bookService.addToCart(id,cart); 
+		}
+		if(flag){
+			//4 getBooks()
+			getBooks(request, response);
+			return;
+		}
+		else{
+			response.sendRedirect(request.getContextPath()+"/error-1.jsp");
+		}
+		
+	}
+	
+	public void  toCartPage(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		request.getRequestDispatcher("/WEB-INF/pages/cart.jsp").forward(request, response);
+	}
+	
+	public void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		String idStr=request.getParameter("id");
+		int id=-1;
+		
+		try {
+			id=Integer.parseInt(idStr);
+		} catch (Exception e) {
+		}
+		ShoppingCart cart=BookStoreWebUtils.getShoppingCart(request);
+		bookService.removeItemFromShoppingCart(cart, id);
+		if(cart.isEmpty()){
+			request.getRequestDispatcher("/WEB-INF/pages/empty.jsp").forward(request, response);
+		}
+		else{
+			request.getRequestDispatcher("/WEB-INF/pages/cart.jsp").forward(request, response);
+		}
+		
+		
+	}
+	
+	public void clear(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
+		ShoppingCart cart=BookStoreWebUtils.getShoppingCart(request);
+		bookService.clearShoppingCart(cart);
+		
+		request.getRequestDispatcher("/WEB-INF/pages/empty.jsp").forward(request, response);
+	}
+	
+	public void updateItemQuantity(HttpServletRequest request, HttpServletResponse response) throws IOException{
+		String idStr=request.getParameter("id");
+		String quantityStr=request.getParameter("quantity");
+		ShoppingCart cart=BookStoreWebUtils.getShoppingCart(request);
+		
+		int id=-1;
+		int quantity=-1;
+		
+		try {
+			id=Integer.parseInt(idStr);
+			quantity=Integer.parseInt(quantityStr);
+		} catch (Exception e) {
+		}
+		if(id>0 && quantity>0)
+			cart.updateItemQuantity(id, quantity);
+		
+		Map<String, Integer> result=new HashMap<>();
+		result.put("bookNumber", cart.getBookNumber());
+		result.put("totalMoney", (int)cart.getTotalMoney());
+		Gson gson=new Gson();
+		String jsonStr=gson.toJson(result);
+		response.setContentType("text/javascript");
+		response.getWriter().print(jsonStr);
 	}
 }

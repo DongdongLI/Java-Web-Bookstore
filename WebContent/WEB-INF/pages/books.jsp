@@ -47,6 +47,10 @@
 	<input type="hidden" name="minPrice" value="${param.minPrice}" />
 	<input type="hidden" name="maxPrice" value="${param.maxPrice}" />
 	<center>
+		<c:if test="${param.title!=null}">You have put <font color="red">${param.title}</font> into cart.</c:if><br><br>
+		<c:if test="${!empty sessionScope.ShoppingCart.books}">
+			You have ${sessionScope.ShoppingCart.bookNumber} items in your cart. <a href="bookServlet?method=toCartPage&pageNo=${bookpage.pageNo}">Procceed to cart</a>
+		</c:if>
 		<br><br>
 		<form action="bookServlet?method=getBooks" method="post">
 			Price: <input type="text" size="4"	name="minPrice" />
@@ -63,7 +67,7 @@
 					${book.author}
 				</td>
 				<td>${book.price}</td>
-				<td><a href="bookServlet?method=addToCart&pageNo=${bookpage.pageNo}&id=${book.id}">Add to Cart</a></td>
+				<td><a href="bookServlet?method=addToCart&pageNo=${bookpage.pageNo}&id=${book.id}&title=${book.title}">Add to Cart</a></td>
 			</tr>
 		</c:forEach>
 	</table>
