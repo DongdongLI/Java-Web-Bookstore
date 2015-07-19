@@ -6,8 +6,11 @@ import java.util.List;
 
 import org.junit.Test;
 
+import com.dongdong.bookstore.dao.impl.AccountDAO;
+import com.dongdong.bookstore.dao.impl.AccountDAOImpl;
 import com.dongdong.bookstore.dao.impl.BaseDao;
 import com.dongdong.bookstore.dao.impl.BookDaoImpl;
+import com.dongdong.bookstore.dao.impl.UserDAOImpl;
 import com.dongdong.bookstore.domain.Book;
 import com.dongdong.bookstore.web.CriteriaBook;
 import com.dongdong.bookstore.web.Page;
@@ -82,5 +85,20 @@ public class test {
 	public void testGetStoreNumber(){
 		int storeNumber=bookDaoImpl.getStoreNumber(5);
 		System.out.println(storeNumber);
+	}
+	
+	AccountDAO accountDao=new AccountDAOImpl();
+	@Test
+	public void testUpdateAccount(){
+		int accountId=1;
+		System.out.println(accountDao.get(accountId));
+	}
+	@Test
+	public void testUpdateBalance(){
+		accountDao.updateBalance(1, 50);
+	}
+	@Test
+	public void testGetUser(){
+		System.out.println(new UserDAOImpl().getUser("AAA"));
 	}
 }

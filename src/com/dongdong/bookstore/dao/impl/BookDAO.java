@@ -11,48 +11,23 @@ import com.dongdong.bookstore.web.Page;
 
 public interface BookDAO {
 
-	/**
-	 * ���� id ��ȡָ�� Book ����
-	 * @param id
-	 * @return
-	 */
+	//get book based on id
 	public abstract Book getBook(int id);
 
-	/**
-	 * ���ݴ���� CriteriaBook ���󷵻ض�Ӧ�� Page ����
-	 * @param cb
-	 * @return
-	 */
+	//
 	public abstract Page<Book> getPage(CriteriaBook cb);
 
-	/**
-	 * ���ݴ���� CriteriaBook ���󷵻����Ӧ�ļ�¼��
-	 * @param cb
-	 * @return
-	 */
+	// get the number of book based on the criteria
 	public abstract long getTotalBookNumber(CriteriaBook cb);
 
-	/**
-	 * ���ݴ���� CriteriaBook �� pageSize ���ص�ǰҳ��Ӧ�� List 
-	 * @param cb
-	 * @param pageNo
-	 * @param pageSize
-	 * @return
-	 */
+	
 	public abstract List<Book> getPageList(CriteriaBook cb,int pageSize);
 
-	/**
-	 * ����ָ�� id �� book �� storeNumber �ֶε�ֵ
-	 * @param id
-	 * @return
-	 */
+	
 	public abstract int getStoreNumber(Integer id);
 
-	/**
-	 * ���ݴ���� ShoppingCartItem �ļ���, 
-	 * �������� books ���ݱ�� storenumber �� salesnumber �ֶε�ֵ
-	 * @param items
-	 */
+	//change book's storeNumber
+	//change book's saleNumber
 	public abstract void batchUpdateStoreNumberAndSalesAmount(
 			Collection<ShoppingCartItem> items);
 

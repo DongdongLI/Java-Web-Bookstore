@@ -49,7 +49,7 @@
 	<center>
 		<c:if test="${param.title!=null}">You have put <font color="red">${param.title}</font> into cart.</c:if><br><br>
 		<c:if test="${!empty sessionScope.ShoppingCart.books}">
-			You have ${sessionScope.ShoppingCart.bookNumber} items in your cart. <a href="bookServlet?method=toCartPage&pageNo=${bookpage.pageNo}">Procceed to cart</a>
+			You have ${sessionScope.ShoppingCart.bookNumber} items in your cart. <a href="bookServlet?method=forwardPage&page=cart.jsp&pageNo=${bookpage.pageNo}">Procceed to cart</a>
 		</c:if>
 		<br><br>
 		<form action="bookServlet?method=getBooks" method="post">

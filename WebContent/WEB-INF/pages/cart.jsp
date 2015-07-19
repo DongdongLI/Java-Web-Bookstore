@@ -128,7 +128,7 @@ $(function(){
 					&nbsp;
 					<a href="bookServlet?method=clear">Clear Shopping cart</a>
 					&nbsp;
-					<a href="">Check out</a>
+					<a href="bookServlet?method=forwardPage&page=cash.jsp">Check out</a>
 				</td>
 			</tr>
 		</table>
