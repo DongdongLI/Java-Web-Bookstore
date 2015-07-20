@@ -58,6 +58,7 @@ public class BookService {
 	public void cash(ShoppingCart shoppingCart, String username, String accountId) {
 		//1 update mybook table
 		bookDAO.batchUpdateStoreNumberAndSalesAmount(shoppingCart.getItems());
+		
 		//2 update balance in account table
 		accountDAO.updateBalance(Integer.parseInt(accountId), shoppingCart.getTotalMoney());
 		//3 insert record to trade table

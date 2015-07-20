@@ -47,6 +47,7 @@ public class BookServlet extends HttpServlet {
 			method.invoke(this, request,response);
 		} catch (Exception e) {
 			e.printStackTrace();
+			throw new RuntimeException(e);
 		} 
 		
 	}

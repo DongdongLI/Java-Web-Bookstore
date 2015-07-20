@@ -8,6 +8,8 @@ import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 /**
  * Servlet Filter implementation class EncodingFilter
@@ -33,17 +35,21 @@ public class EncodingFilter implements Filter {
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
-		String encoding =filterConfig.getServletContext().getInitParameter("encoding");
-		
-		request.setCharacterEncoding(encoding);
-		chain.doFilter(request, response);
+//		String servletPath=((HttpServletRequest)request).getServletPath();
+//		if(servletPath.contains("index")){
+//			((HttpServletRequest)request).getRequestDispatcher(((HttpServletRequest)request).getContextPath() + "/bookServlet?method=getBooks");
+//			return;
+//		}
+			String encoding = filterConfig.getServletContext().getInitParameter("encoding");
+			request.setCharacterEncoding(encoding);
+			chain.doFilter(request, response);
+			
 	}
-	private FilterConfig filterConfig=null;
-	/**
-	 * @see Filter#init(FilterConfig)
-	 */
+
+	private FilterConfig filterConfig = null;
+	
 	public void init(FilterConfig fConfig) throws ServletException {
-		filterConfig=fConfig;
+		this.filterConfig = fConfig;
 	}
 
 }

@@ -1,3 +1,4 @@
 <%
-	response.sendRedirect(request.getContextPath()+"/bookServlet?method=getBooks");
+	response.sendRedirect(request.getContextPath() + "/bookServlet?method=getBooks");
+	
 %>
