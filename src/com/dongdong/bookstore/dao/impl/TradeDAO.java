@@ -2,6 +2,8 @@ package com.dongdong.bookstore.dao.impl;
 
 import java.util.Set;
 
+import com.dongdong.bookstore.domain.Trade;
+
 
 public interface TradeDAO {
 

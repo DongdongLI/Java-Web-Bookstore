@@ -1,4 +1,4 @@
-package com.dongdong.bookstore.dao.impl;
+package com.dongdong.bookstore.domain;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

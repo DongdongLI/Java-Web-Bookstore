@@ -11,10 +11,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.dongdong.bookstore.dao.impl.User;
 import com.dongdong.bookstore.domain.Book;
 import com.dongdong.bookstore.domain.ShoppingCart;
 import com.dongdong.bookstore.domain.ShoppingCartItem;
+import com.dongdong.bookstore.domain.User;
 import com.dongdong.bookstore.service.AccountService;
 import com.dongdong.bookstore.service.BookService;
 import com.dongdong.bookstore.service.UserService;
@@ -277,5 +277,8 @@ public class BookServlet extends HttpServlet {
 			request.getRequestDispatcher("/WEB-INF/pages/cash.jsp").forward(request, response);
 			return;
 		}
+		// check is over, procceed to the final step
+		bookService.cash(BookStoreWebUtils.getShoppingCart(request),username,accountId);
+		request.getRequestDispatcher("/WEB-INF/pages/success.jsp").forward(request, response);
 	}
 }

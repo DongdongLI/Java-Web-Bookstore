@@ -14,7 +14,7 @@
 	<center>
 		<br><br>
 		<h4>You have purchased ${sessionScope.ShoppingCart.bookNumber} books.</h4>
-		<h4>${sessionScope.ShoppingCart.totalMoney} in total.</h4>
+		<h4>$${sessionScope.ShoppingCart.totalMoney} in total.</h4>
 		<form action="bookServlet?method=cash" method="post">
 			<table cellspacing="10">
 				<tr>

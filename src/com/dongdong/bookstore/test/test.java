@@ -2,7 +2,11 @@ package com.dongdong.bookstore.test;
 
 
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 
@@ -10,8 +14,15 @@ import com.dongdong.bookstore.dao.impl.AccountDAO;
 import com.dongdong.bookstore.dao.impl.AccountDAOImpl;
 import com.dongdong.bookstore.dao.impl.BaseDao;
 import com.dongdong.bookstore.dao.impl.BookDaoImpl;
+import com.dongdong.bookstore.dao.impl.TradeDAO;
+import com.dongdong.bookstore.dao.impl.TradeDAOImpl;
+import com.dongdong.bookstore.dao.impl.TradeItemDAO;
+import com.dongdong.bookstore.dao.impl.TradeItemDAOImpl;
 import com.dongdong.bookstore.dao.impl.UserDAOImpl;
 import com.dongdong.bookstore.domain.Book;
+import com.dongdong.bookstore.domain.ShoppingCartItem;
+import com.dongdong.bookstore.domain.Trade;
+import com.dongdong.bookstore.domain.TradeItem;
 import com.dongdong.bookstore.web.CriteriaBook;
 import com.dongdong.bookstore.web.Page;
 
@@ -100,5 +111,52 @@ public class test {
 	@Test
 	public void testGetUser(){
 		System.out.println(new UserDAOImpl().getUser("AAA"));
+	}
+	@Test
+	public void testBatchUpdateStore(){
+		Collection<ShoppingCartItem> items=new ArrayList<>();
+		
+		Book book=bookDaoImpl.getBook(1);
+		ShoppingCartItem i=new ShoppingCartItem(book);
+		i.setQuantity(1);
+		items.add(i);
+		
+		book=bookDaoImpl.getBook(2);
+		i=new ShoppingCartItem(book);
+		i.setQuantity(1);
+		items.add(i);
+		
+		 book=bookDaoImpl.getBook(3);
+		i=new ShoppingCartItem(book);
+		i.setQuantity(1);
+		items.add(i);
+		bookDaoImpl.batchUpdateStoreNumberAndSalesAmount(items);
+	}
+	@Test
+	public void testTradeInsert(){
+		Trade trade=new Trade();
+		trade.setUserId(3);
+		trade.setTradeTime(new Date(new java.util.Date().getTime()));
+		new TradeDAOImpl().insert(trade);
+	}
+	@Test
+	public void testGetSetofTrade(){
+		Set<Trade> trades=new TradeDAOImpl().getTradesWithUserId(1);
+		System.out.println(trades);
+	}
+	private TradeItemDAO tradeItemDAO = new TradeItemDAOImpl();
+	@Test
+	public void testBatchSaveTradeItemDaoImpl(){
+		Collection<TradeItem> items = new ArrayList<>();
+		
+		items.add(new TradeItem(null,4, 7, 12));
+		items.add(new TradeItem(null, 5, 8, 13));
+		
+		tradeItemDAO.batchSave(items);
+	}
+	@Test
+	public void testGetTradeItemWithTradeId(){
+		Set<TradeItem> items=tradeItemDAO.getTradeItemsWithTradeId(16);
+		System.out.println(items);
 	}
 }

@@ -1,7 +1,10 @@
 package com.dongdong.bookstore.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.websocket.server.PathParam;
 
 import com.dongdong.bookstore.domain.Book;
 import com.dongdong.bookstore.domain.ShoppingCartItem;
@@ -54,7 +57,17 @@ public class BookDaoImpl extends BaseDao<Book> implements BookDAO{
 	@Override
 	public void batchUpdateStoreNumberAndSalesAmount(Collection<ShoppingCartItem> items) {
 		// TODO Auto-generated method stub
-		
+		String sql="update mybooks set salesamount=salesamount+?, storenumber=storenumber-? where id=?";
+		List<ShoppingCartItem> list=new ArrayList<>(items);
+		Object[][] params=null;
+		params=new Object[items.size()][3];
+		for(int i=0;i<items.size();i++){
+			params[i][0]=list.get(i).getQuantity();
+			params[i][1]=list.get(i).getQuantity();
+			params[i][2]=list.get(i).getBook().getId();
+			System.out.println(list.get(i).getBook().getTitle());
+		}
+		batch(sql, params);
 	}
 
 	
