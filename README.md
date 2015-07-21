@@ -5,20 +5,20 @@
 ## workflow:
 
 
----------------------------------------------------Implementation detail
-****Adapted MVC architectural pattern:
+Implementation detail:
+Adapted MVC architectural pattern:
   Model: Plain Old Java Object
   Controller: Servlet
   View: JSP+EL+JSTL
 
-****Techonology  
+Techonology  
   Database: MySQL
   Datasource: c3p0
   JDBC tool: DBUtils
   Transaction solution: Filter+ThreadLocal
   Ajax solution: jQuery, JavaScript, gson
   
-****tables in db
+tables in db
 
 account: accountId, balance
 myBooks: id, author, title, price, publishingDate, salesAmount, storeNumber, remark
