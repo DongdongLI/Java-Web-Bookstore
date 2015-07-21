@@ -17,7 +17,7 @@ public class TradeDAOImpl extends BaseDao<Trade> implements TradeDAO {
 	@Override
 	public Set<Trade> getTradesWithUserId(Integer userId) {
 		String sql="select * from trade where userId=? order by tradeTime desc";
-		return new LinkedHashSet(queryForList(sql, userId));
+		return new LinkedHashSet(queryForList(sql, userId)); // it is a set with order
 	}
 	
 }
