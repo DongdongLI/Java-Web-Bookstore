@@ -8,6 +8,7 @@
 ##Implementation detail:
 Adapted MVC architectural pattern:
   Model: Plain Old Java Object
+  
   Controller: Servlet
   View: JSP+EL+JSTL
 
